@@ -4,8 +4,22 @@ declare global {
   }
 }
 
+declare global {
+  interface WindowEventMap {
+    "android-tag-scanned": CustomEvent<{ tag: string }>;
+  }
+}
+
 export const Web = {
   onLocationChanged: (location: string) => {
+    window.Android.showToast("Web.onLocationChanged: " + location);
     console.log("Web.onLocationChanged: " + location);
+  },
+  onTagScanned: (tag: string) => {
+    window.Android.showToast("Web.onTagScanned: " + tag);
+    console.log("Web.onTagScanned: " + tag);
+    window.dispatchEvent(
+      new CustomEvent("android-tag-scanned", { detail: { tag } }),
+    );
   },
 };
