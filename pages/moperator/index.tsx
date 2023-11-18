@@ -5,6 +5,6 @@ export default function Page() {
   const router = useRouter();
   useEffect(() => {
     router.push("/moperator/tasks");
-  }, []);
+  }, [router]);
   return null;
 }
