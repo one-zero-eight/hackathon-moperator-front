@@ -25,11 +25,11 @@ export function TaskButton({ taskId }: { taskId: number }) {
             ПАУЗА
           </button>
           <button
-            className="flex h-fit w-full flex-row items-center justify-center gap-1 p-2 text-sm font-bold text-red-600"
-            onClick={() => setStatus("canceled")}
+            className="flex h-fit w-full flex-row items-center justify-center gap-1 p-2 text-sm font-bold text-green-600"
+            onClick={() => setStatus("completed")}
           >
-            <span className="icon-[material-symbols--cancel-outline] text-2xl" />
-            ОТМЕНА
+            <span className="icon-[material-symbols--check-circle-outline] text-2xl" />
+            ЗАВЕРШИТЬ
           </button>
         </>
       ) : task.status == "paused" ? (
@@ -49,7 +49,15 @@ export function TaskButton({ taskId }: { taskId: number }) {
             ОТМЕНА
           </button>
         </>
-      ) : null}
+      ) : (
+        <button
+          className="flex h-fit w-full flex-row items-center justify-center gap-1 p-2 text-green-900"
+          onClick={() => setStatus("in_progress")}
+        >
+          <span className="icon-[material-symbols--play-circle-outline] text-2xl" />
+          ПРОДОЛЖИТЬ
+        </button>
+      )}
     </div>
   );
 }
