@@ -1,3 +1,4 @@
+import Offline from "@/components/Offline";
 import { useLoginUsingCredentials } from "@/lib/auth";
 import { useState } from "react";
 
@@ -18,6 +19,7 @@ export default function Page() {
 
   return (
     <main className="flex h-[100dvh] flex-col bg-gradient-to-br from-green-50 to-green-300">
+      <Offline />
       <div className="flex-grow" />
       <div className="flex flex-col items-center justify-center gap-2 p-4 text-center">
         <h1 className="text-2xl font-bold">Войдите в систему</h1>
