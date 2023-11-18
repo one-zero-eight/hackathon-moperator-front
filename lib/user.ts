@@ -2,11 +2,17 @@ import { API_URL, fetcher } from "@/lib/api";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR from "swr";
-import { useLocalStorage } from "usehooks-ts";
+import { useIsClient, useLocalStorage } from "usehooks-ts";
 
 export type User = {
   id: number;
-  firstName: string;
+  rfid_id: string;
+  email: string;
+  employee_id: string;
+  first_name: string;
+  last_name: string;
+  middle_name: string;
+  role: string;
 };
 
 export function useUser() {
@@ -18,12 +24,12 @@ export function useUser() {
     "user",
     undefined,
   );
+  const isClient = useIsClient();
   const { data, error, mutate } = useSWR(
     () => (token ? [`${API_URL}/users/me`, token] : null),
     ([url, token]) => fetcher<User>(url, token),
   );
   const router = useRouter();
-  console.log(JSON.stringify({ data, error, token, storedUser }));
 
   useEffect(() => {
     if (error && error.status === 403 && token) {
@@ -35,7 +41,6 @@ export function useUser() {
   useEffect(() => {
     if (data) {
       setStoredUser((prevData) => {
-        console.log(prevData, data);
         if (
           !prevData ||
           prevData.id !== data.id ||
@@ -49,7 +54,7 @@ export function useUser() {
   }, [data, setStoredUser, router]);
 
   return {
-    user: storedUser,
+    user: isClient ? storedUser : undefined,
     isLoading: !error && !data,
     isError: error,
     isLoggedIn: !!token && !!storedUser,
