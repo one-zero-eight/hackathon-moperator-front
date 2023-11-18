@@ -20,7 +20,7 @@ export default function Page() {
       }
     }, 1500);
     return () => clearTimeout(timer);
-  }, [user, router]);
+  }, [user, router, return_to]);
 
   return (
     <main className="flex h-[100dvh] flex-col items-center justify-center overflow-y-auto bg-gradient-to-br from-green-100 to-green-300">
