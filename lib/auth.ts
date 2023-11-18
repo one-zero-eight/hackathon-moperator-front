@@ -55,7 +55,7 @@ export function useLoginUsingCredentials() {
           router.push("/auth/sign-in");
         });
     },
-    [trigger, setToken],
+    [trigger, setToken, router],
   );
 }
 
@@ -106,6 +106,6 @@ export function useLoginUsingTag() {
           router.push("/auth/sign-in");
         });
     },
-    [trigger, setToken],
+    [trigger, setToken, router],
   );
 }

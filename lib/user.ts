@@ -36,7 +36,7 @@ export function useUser() {
       setToken(undefined);
       setStoredUser(undefined);
     }
-  }, [error, token, setToken]);
+  }, [error, token, setToken, setStoredUser]);
 
   useEffect(() => {
     if (data) {
