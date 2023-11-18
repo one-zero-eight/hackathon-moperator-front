@@ -12,7 +12,6 @@ declare global {
 
 export const Web = {
   onLocationChanged: (location: string) => {
-    window.Android.showToast("Web.onLocationChanged: " + location);
     console.log("Web.onLocationChanged: " + location);
   },
   onTagScanned: (tag: string) => {

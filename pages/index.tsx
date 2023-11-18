@@ -1,15 +1,17 @@
-export default function Home() {
+import Link from "next/link";
+import { useRouter } from "next/router";
+
+export default function Page() {
+  const router = useRouter();
   return (
-    <main className="flex flex-col">
-      <h1 className="text-center text-5xl font-bold">Hello operator</h1>
-      <button
-        className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-        onClick={() => {
-          window.Android.showToast("Hello from Android");
-        }}
-      >
-        Button
-      </button>
+    <main className="flex flex-col gap-4 p-4">
+      <h1 className="text-center text-5xl font-bold">Hello</h1>
+      <Link href="/auth/sign-in" className="p-4 text-center">
+        Вход
+      </Link>
+      <Link href="/moperator/tasks" className="p-4 text-center">
+        Задачи
+      </Link>
     </main>
   );
 }

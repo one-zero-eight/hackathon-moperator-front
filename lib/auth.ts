@@ -15,8 +15,11 @@ async function loginUsingCredentials(
   },
 ) {
   return fetch(url, {
-    body: JSON.stringify({ login, password }),
     method: "POST",
+    body: JSON.stringify({ login, password }),
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 }
 
@@ -68,8 +71,11 @@ async function loginUsingTag(
   },
 ) {
   return fetch(url, {
-    body: JSON.stringify({ id: tag }),
     method: "POST",
+    body: JSON.stringify({ tag }),
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 }
 

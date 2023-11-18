@@ -1,4 +1,4 @@
-export default function Home() {
+export default function Page() {
   return (
     <main className="flex flex-col">
       <h1 className="text-center text-5xl font-bold">404</h1>

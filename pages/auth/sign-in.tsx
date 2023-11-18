@@ -2,7 +2,7 @@ import { useLoginUsingCredentials, useLoginUsingTag } from "@/lib/auth";
 import { useState } from "react";
 import { useEventListener } from "usehooks-ts";
 
-export default function Home() {
+export default function Page() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const loginUsingCredentials = useLoginUsingCredentials();
