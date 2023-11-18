@@ -24,7 +24,7 @@ export default function Page() {
         </div>
       </TopBar>
       <main className="flex flex-grow flex-col overflow-y-auto">
-        <div className="flex min-h-[12em] max-w-full flex-row items-center overflow-x-hidden border-b-2 border-green-600 pb-4">
+        <div className="flex min-h-[12em] max-w-full flex-row items-center overflow-x-hidden bg-gradient-to-tr from-green-100 to-green-300 pb-4">
           <div className="p-4 text-right text-2xl font-medium">
             {user?.last_name} {user?.first_name} {user?.middle_name}
           </div>
