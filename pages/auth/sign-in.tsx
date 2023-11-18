@@ -1,38 +1,23 @@
-import { useLoginUsingCredentials, useLoginUsingTag } from "@/lib/auth";
+import { useLoginUsingCredentials } from "@/lib/auth";
 import { useState } from "react";
-import { useEventListener } from "usehooks-ts";
 
 export default function Page() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const loginUsingCredentials = useLoginUsingCredentials();
-  const loginUsingTag = useLoginUsingTag();
 
-  const loginHandler = () => {
+  const loginHandler = async () => {
     if (login.trim() === "") {
       window.Android.showToast("Введите логин");
-      return;
-    }
-    if (password.trim() === "") {
+    } else if (password.trim() === "") {
       window.Android.showToast("Введите пароль");
-      return;
+    } else {
+      await loginUsingCredentials(login, password);
     }
-    window.Android.showToast("Вход по паролю...");
-    loginUsingCredentials(login, password).then((res) => {
-      if (res) {
-      } else {
-      }
-    });
   };
 
-  useEventListener("android-tag-scanned", (e) => {
-    const tag = e.detail.tag;
-    window.Android.showToast("Вход по NFC...");
-    loginUsingTag(tag).then((res) => {});
-  });
-
   return (
-    <main className="flex h-[100dvh] flex-col">
+    <main className="flex h-[100dvh] flex-col bg-gradient-to-br from-green-50 to-green-300">
       <div className="flex-grow" />
       <div className="flex flex-col items-center justify-center gap-2 p-4 text-center">
         <h1 className="text-2xl font-bold">Войдите в систему</h1>

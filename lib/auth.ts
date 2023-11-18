@@ -1,4 +1,5 @@
 import { API_URL } from "@/lib/api";
+import { useRouter } from "next/router";
 import { useCallback } from "react";
 import useSWRMutation from "swr/mutation";
 import { useLocalStorage } from "usehooks-ts";
@@ -8,10 +9,7 @@ async function loginUsingCredentials(
   {
     arg: { login, password },
   }: {
-    arg: {
-      login: string;
-      password: string;
-    };
+    arg: { login: string; password: string };
   },
 ) {
   return fetch(url, {
@@ -24,22 +22,24 @@ async function loginUsingCredentials(
 }
 
 export function useLoginUsingCredentials() {
+  const router = useRouter();
   const { trigger } = useSWRMutation(
     `${API_URL}/auth/by-credentials`,
     loginUsingCredentials,
     {},
   );
-  const [token, setToken] = useLocalStorage<string | undefined>(
-    "token",
-    undefined,
-  );
+  const [_, setToken] = useLocalStorage<string | undefined>("token", undefined);
 
   return useCallback(
     async (login: string, password: string) => {
       return trigger({ login, password })
         .then((res) => {
           if (!res.ok) {
-            throw new Error("Ошибка входа");
+            if (res.status == 401 || res.status == 403) {
+              throw new Error("Неверный логин или пароль");
+            } else {
+              throw new Error(`Ответ сервера ${res.status}`);
+            }
           }
           return res.json() as Promise<{
             token: string;
@@ -47,13 +47,12 @@ export function useLoginUsingCredentials() {
         })
         .then((data) => {
           setToken(data.token);
-          window.Android.showToast("Вход выполнен");
-          return true;
+          router.replace("/auth/hello");
         })
         .catch((err) => {
-          window.Android.showToast("Ошибка входа: " + err.message);
           console.log(err);
-          return false;
+          window.Android.showToast("Ошибка входа: " + err.message);
+          router.push("/auth/sign-in");
         });
     },
     [trigger, setToken],
@@ -62,13 +61,7 @@ export function useLoginUsingCredentials() {
 
 async function loginUsingTag(
   url: string,
-  {
-    arg: { tag },
-  }: {
-    arg: {
-      tag: string;
-    };
-  },
+  { arg: { tag } }: { arg: { tag: string } },
 ) {
   return fetch(url, {
     method: "POST",
@@ -80,22 +73,24 @@ async function loginUsingTag(
 }
 
 export function useLoginUsingTag() {
+  const router = useRouter();
   const { trigger } = useSWRMutation(
     `${API_URL}/auth/by-tag`,
     loginUsingTag,
     {},
   );
-  const [token, setToken] = useLocalStorage<string | undefined>(
-    "token",
-    undefined,
-  );
+  const [_, setToken] = useLocalStorage<string | undefined>("token", undefined);
 
   return useCallback(
     async (tag: string) => {
       return trigger({ tag })
         .then((res) => {
           if (!res.ok) {
-            throw new Error("Ошибка входа");
+            if (res.status == 401 || res.status == 403) {
+              throw new Error("Неверная NFC метка");
+            } else {
+              throw new Error(`Ответ сервера ${res.status}`);
+            }
           }
           return res.json() as Promise<{
             token: string;
@@ -103,13 +98,12 @@ export function useLoginUsingTag() {
         })
         .then((data) => {
           setToken(data.token);
-          window.Android.showToast("Вход выполнен");
-          return true;
+          router.replace("/auth/hello");
         })
         .catch((err) => {
-          window.Android.showToast("Ошибка входа: " + err.message);
           console.log(err);
-          return false;
+          window.Android.showToast("Ошибка входа: " + err.message);
+          router.push("/auth/sign-in");
         });
     },
     [trigger, setToken],

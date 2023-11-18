@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const { user, isLoading: isUserLoading, isLoggedIn } = useUser();
+  const { isLoggedIn } = useUser();
   const loginUsingTag = useLoginUsingTag();
 
   useEffect(() => {
@@ -30,12 +30,9 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [isLoggedIn, router]);
 
-  useEventListener("android-tag-scanned", (e) => {
-    if (router.route === "/auth/sign-in") {
-      return; // Event will be handled by /auth/sign-in.tsx
-    }
+  useEventListener("android-tag-scanned", async (e) => {
     const tag = e.detail.tag;
-    loginUsingTag(tag).then((res) => {});
+    await loginUsingTag(tag);
   });
 
   return (
