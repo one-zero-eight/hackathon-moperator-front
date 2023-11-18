@@ -1,5 +1,6 @@
 import { defaultAndroid } from "@/lib/androidInterface";
 import { useLoginUsingTag } from "@/lib/auth";
+import { PWALifeCycle } from "@/lib/PWALifecycle";
 import { useUser } from "@/lib/user";
 import { Web } from "@/lib/webInterface";
 import "@/styles/globals.css";
@@ -48,8 +49,11 @@ export default function App({ Component, pageProps }: AppProps) {
   });
 
   return (
-    <div className={`${inter.className}`}>
-      <Component {...pageProps} />
-    </div>
+    <>
+      <PWALifeCycle />
+      <div className={`${inter.className}`}>
+        <Component {...pageProps} />
+      </div>
+    </>
   );
 }

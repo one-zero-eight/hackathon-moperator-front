@@ -10,11 +10,13 @@
     "prettify": "prettier --write ."
   },
   "dependencies": {
+    "@ducanh2912/next-pwa": "^9.7.2",
     "@iconify/json": "^2.2.143",
     "@iconify/tailwind": "^0.1.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/workbox-sw": "^4.3.7",
     "autoprefixer": "^10.4.16",
     "date-fns": "^2.30.0",
     "eslint": "^8",

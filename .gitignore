@@ -36,3 +36,10 @@ yarn-error.log*
 next-env.d.ts
 
 .idea
+
+# next-pwa
+**/public/workbox**
+**/public/sw**
+**/public/worker**
+**/public/fallback**
+**/public/precache**

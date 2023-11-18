@@ -8,7 +8,7 @@ export default function Page() {
   }, [router]);
   return (
     <main className="flex flex-col">
-      <h1 className="text-center text-5xl font-bold">404</h1>
+      <h1 className="text-center text-5xl font-bold">Offline</h1>
     </main>
   );
 }
