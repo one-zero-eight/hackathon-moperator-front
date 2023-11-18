@@ -7,11 +7,13 @@ import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useSWRConfig } from "swr";
 import { useEventListener } from "usehooks-ts";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const { mutate: globalMutate } = useSWRConfig();
   const router = useRouter();
   const { isLoggedIn } = useUser();
   const loginUsingTag = useLoginUsingTag();
@@ -22,13 +24,18 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   useEffect(() => {
+    if (!isLoggedIn) {
+      // Clear cache
+      console.log("Resetting cache");
+      globalMutate(() => true, undefined, { revalidate: false });
+    }
     if (router.asPath === "/auth/sign-in") {
       return;
     }
     if (!isLoggedIn) {
       router.push("/auth/sign-in");
     }
-  }, [isLoggedIn, router]);
+  }, [isLoggedIn, router, globalMutate]);
 
   useEventListener("android-tag-scanned", async (e) => {
     const tag = e.detail.tag;

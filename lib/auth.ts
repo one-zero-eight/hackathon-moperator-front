@@ -2,6 +2,7 @@ import { API_URL } from "@/lib/api";
 import { User } from "@/lib/user";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
+import { useSWRConfig } from "swr";
 import useSWRMutation from "swr/mutation";
 import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
 
@@ -24,6 +25,7 @@ async function loginUsingCredentials(
 
 export function useLoginUsingCredentials() {
   const router = useRouter();
+  const { mutate: globalMutate } = useSWRConfig();
   const { trigger } = useSWRMutation(
     `/auth/by-credentials`,
     loginUsingCredentials,
@@ -49,6 +51,9 @@ export function useLoginUsingCredentials() {
         })
         .then((data) => {
           console.log("data", JSON.stringify(data));
+          // Clear cache
+          console.log("Resetting cache because of login");
+          globalMutate(() => true, undefined, { revalidate: false });
           setToken(data.token);
           router.replace("/auth/hello");
         })
@@ -58,7 +63,7 @@ export function useLoginUsingCredentials() {
           setToken(undefined);
         });
     },
-    [trigger, setToken, router],
+    [trigger, setToken, router, globalMutate],
   );
 }
 
@@ -77,6 +82,7 @@ async function loginUsingTag(
 
 export function useLoginUsingTag() {
   const router = useRouter();
+  const { mutate: globalMutate } = useSWRConfig();
   const { trigger } = useSWRMutation(`/auth/by-tag`, loginUsingTag, {});
   const [token, setToken] = useLocalStorage<string | undefined>(
     "token",
@@ -108,6 +114,9 @@ export function useLoginUsingTag() {
         })
         .then((data) => {
           console.log("data", JSON.stringify(data));
+          // Clear cache
+          console.log("Resetting cache because of login");
+          globalMutate(() => true, undefined, { revalidate: false });
           setToken(data.token);
           router.replace("/auth/hello");
         })
@@ -117,7 +126,7 @@ export function useLoginUsingTag() {
           setToken(undefined);
         });
     },
-    [trigger, setToken, router, storedUser, token],
+    [trigger, setToken, router, storedUser, token, globalMutate],
   );
 }
 
