@@ -25,7 +25,7 @@ export default function Page() {
   return (
     <main className="flex h-[100dvh] flex-col items-center justify-center overflow-y-auto bg-gradient-to-br from-green-100 to-green-300">
       <h2 className="text-center text-3xl font-medium">Добро пожаловать</h2>
-      <div className="p-4 text-right text-2xl font-medium">
+      <div className="p-4 text-center text-2xl font-medium">
         {user?.last_name} {user?.first_name} {user?.middle_name}
       </div>
       <div className="mt-8 flex items-center justify-center">
