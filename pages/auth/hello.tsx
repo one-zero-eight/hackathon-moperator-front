@@ -5,11 +5,14 @@ import { useEffect } from "react";
 export default function Page() {
   const router = useRouter();
   const { user } = useUser();
+  const { return_to } = router.query;
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (user) {
-        if (user.role === "agronomist") {
+        if (typeof return_to === "string") {
+          router.replace(return_to);
+        } else if (user.role === "agronomist") {
           router.replace("/agronomist/profile");
         } else {
           router.replace("/moperator/tasks");

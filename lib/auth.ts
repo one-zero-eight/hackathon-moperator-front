@@ -1,8 +1,9 @@
 import { API_URL } from "@/lib/api";
+import { User } from "@/lib/user";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import useSWRMutation from "swr/mutation";
-import { useLocalStorage } from "usehooks-ts";
+import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
 
 async function loginUsingCredentials(
   url: string,
@@ -32,9 +33,10 @@ export function useLoginUsingCredentials() {
 
   return useCallback(
     async (login: string, password: string) => {
-      return trigger({ login, password })
+      trigger({ login, password })
         .then((res) => {
           if (!res.ok) {
+            console.log("res.status", res.status);
             if (res.status == 401 || res.status == 403) {
               throw new Error("Неверный логин или пароль");
             } else {
@@ -46,13 +48,14 @@ export function useLoginUsingCredentials() {
           }>;
         })
         .then((data) => {
+          console.log("data", JSON.stringify(data));
           setToken(data.token);
           router.replace("/auth/hello");
         })
         .catch((err) => {
           console.log(err);
           window.Android.showToast("Ошибка входа: " + err.message);
-          router.push("/auth/sign-in");
+          setToken(undefined);
         });
     },
     [trigger, setToken, router],
@@ -79,13 +82,24 @@ export function useLoginUsingTag() {
     loginUsingTag,
     {},
   );
-  const [_, setToken] = useLocalStorage<string | undefined>("token", undefined);
+  const [token, setToken] = useLocalStorage<string | undefined>(
+    "token",
+    undefined,
+  );
+  const storedUser = useReadLocalStorage<User>("user") || undefined;
 
   return useCallback(
     async (tag: string) => {
-      return trigger({ tag })
+      if (token && storedUser?.rfid_id === tag) {
+        console.log("Already logged in");
+        await router.replace(`/auth/hello?return_to=${router.asPath}`);
+        return;
+      }
+
+      trigger({ tag })
         .then((res) => {
           if (!res.ok) {
+            console.log("res.status", res.status);
             if (res.status == 401 || res.status == 403) {
               throw new Error("Неверная NFC метка");
             } else {
@@ -97,16 +111,17 @@ export function useLoginUsingTag() {
           }>;
         })
         .then((data) => {
+          console.log("data", JSON.stringify(data));
           setToken(data.token);
           router.replace("/auth/hello");
         })
         .catch((err) => {
           console.log(err);
           window.Android.showToast("Ошибка входа: " + err.message);
-          router.push("/auth/sign-in");
+          setToken(undefined);
         });
     },
-    [trigger, setToken, router],
+    [trigger, setToken, router, storedUser, token],
   );
 }
 

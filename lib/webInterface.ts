@@ -15,7 +15,6 @@ export const Web = {
     console.log("Web.onLocationChanged: " + location);
   },
   onTagScanned: (tag: string) => {
-    window.Android.showToast("Web.onTagScanned: " + tag);
     console.log("Web.onTagScanned: " + tag);
     window.dispatchEvent(
       new CustomEvent("android-tag-scanned", { detail: { tag } }),
