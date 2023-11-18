@@ -109,3 +109,11 @@ export function useLoginUsingTag() {
     [trigger, setToken, router],
   );
 }
+
+export function useLogout() {
+  const [_, setToken] = useLocalStorage<string | undefined>("token", undefined);
+
+  return useCallback(() => {
+    setToken(undefined);
+  }, [setToken]);
+}

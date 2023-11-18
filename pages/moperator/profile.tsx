@@ -1,15 +1,27 @@
 import BottomNavBar from "@/components/BottomNavBar";
 import TaskCard from "@/components/TaskCard";
 import TopBar from "@/components/TopBar";
+import { useLogout } from "@/lib/auth";
 import { useUser } from "@/lib/user";
 
 export default function Page() {
   const { user } = useUser();
+  const logout = useLogout();
 
   return (
     <div className="flex h-[100dvh] flex-col">
       <TopBar>
-        <h1 className="text-xl font-medium text-white">Мой профиль</h1>
+        <h1 className="flex-grow text-xl font-medium text-white">
+          Мой профиль
+        </h1>
+        <div className="-mr-2 flex items-center justify-center overflow-clip rounded-full text-white">
+          <button
+            className="flex items-center justify-center p-2"
+            onClick={() => logout()}
+          >
+            <span className="icon-[material-symbols--logout-rounded] text-3xl" />
+          </button>
+        </div>
       </TopBar>
       <main className="flex flex-grow flex-col overflow-y-auto">
         <div className="flex min-h-[12em] max-w-full flex-row items-center overflow-x-hidden border-b-2 border-green-600 pb-4">
