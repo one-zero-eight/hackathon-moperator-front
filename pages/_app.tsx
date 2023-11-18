@@ -8,7 +8,7 @@ import { Inter } from "next/font/google";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSWRConfig } from "swr";
-import { useEventListener } from "usehooks-ts";
+import { useEventListener, useReadLocalStorage } from "usehooks-ts";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,12 +16,17 @@ export default function App({ Component, pageProps }: AppProps) {
   const { mutate: globalMutate } = useSWRConfig();
   const router = useRouter();
   const { isLoggedIn } = useUser();
+  const token = useReadLocalStorage<string>("token");
   const loginUsingTag = useLoginUsingTag();
 
   useEffect(() => {
     window.Web = Web;
     window.Android = window.Android || defaultAndroid;
   }, []);
+
+  useEffect(() => {
+    window.Android.setToken(token || undefined);
+  }, [token]);
 
   useEffect(() => {
     if (!isLoggedIn) {
