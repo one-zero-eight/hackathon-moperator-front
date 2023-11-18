@@ -24,11 +24,11 @@ export default function Page() {
         </div>
       </TopBar>
       <main className="flex flex-grow flex-col overflow-y-auto">
-        <div className="flex min-h-[12em] max-w-full flex-row items-center overflow-x-hidden bg-gradient-to-tr from-green-100 to-green-300 pb-4">
+        <div className="flex min-h-[12rem] max-w-full flex-row items-center overflow-x-hidden bg-gradient-to-tr from-green-100 to-green-300 pb-4">
           <div className="p-4 text-right text-2xl font-medium">
             {user?.last_name} {user?.first_name} {user?.middle_name}
           </div>
-          <div className="-mr-16 -mt-16 h-60 w-60 min-w-[15em] rounded-full border-2 border-green-600 bg-green-400" />
+          <div className="-mr-16 -mt-16 h-60 w-60 min-w-[15rem] rounded-full border-2 border-green-600 bg-green-400" />
         </div>
         <div className="flex flex-col justify-center gap-4 p-4">
           <div className="flex flex-col gap-2">

@@ -6,7 +6,7 @@ export default function BottomNavBar({
   selected: "tasks" | "machines" | "notifications" | "profile";
 }) {
   return (
-    <div className="flex h-12 min-h-[3em] items-center justify-between bg-green-900 px-4 text-white">
+    <div className="flex h-12 min-h-[3rem] items-center justify-between bg-green-900 px-4 text-white">
       <div className="flex items-center justify-center overflow-clip rounded-full">
         <Link
           href="/moperator/tasks"
