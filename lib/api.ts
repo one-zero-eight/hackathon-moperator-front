@@ -1,9 +1,10 @@
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export async function fetcher<T>(url: string, token: string | undefined) {
-  const res = await fetch(url, {
+export async function fetcher<T>(url: string) {
+  const token = localStorage.getItem("token");
+  const res = await fetch(API_URL + url, {
     headers: {
-      Authorization: token ? `Bearer ${token}` : ``,
+      Authorization: token ? `Bearer ${JSON.parse(token)}` : ``,
     },
   });
 

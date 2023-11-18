@@ -13,7 +13,7 @@ async function loginUsingCredentials(
     arg: { login: string; password: string };
   },
 ) {
-  return fetch(url, {
+  return fetch(API_URL + url, {
     method: "POST",
     body: JSON.stringify({ login, password }),
     headers: {
@@ -25,7 +25,7 @@ async function loginUsingCredentials(
 export function useLoginUsingCredentials() {
   const router = useRouter();
   const { trigger } = useSWRMutation(
-    `${API_URL}/auth/by-credentials`,
+    `/auth/by-credentials`,
     loginUsingCredentials,
     {},
   );
@@ -66,7 +66,7 @@ async function loginUsingTag(
   url: string,
   { arg: { tag } }: { arg: { tag: string } },
 ) {
-  return fetch(url, {
+  return fetch(API_URL + url, {
     method: "POST",
     body: JSON.stringify({ tag }),
     headers: {
@@ -77,11 +77,7 @@ async function loginUsingTag(
 
 export function useLoginUsingTag() {
   const router = useRouter();
-  const { trigger } = useSWRMutation(
-    `${API_URL}/auth/by-tag`,
-    loginUsingTag,
-    {},
-  );
+  const { trigger } = useSWRMutation(`/auth/by-tag`, loginUsingTag, {});
   const [token, setToken] = useLocalStorage<string | undefined>(
     "token",
     undefined,

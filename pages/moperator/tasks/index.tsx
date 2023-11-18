@@ -1,8 +1,11 @@
 import BottomNavBar from "@/components/BottomNavBar";
 import TaskCard from "@/components/TaskCard";
 import TopBar from "@/components/TopBar";
+import { useTasks } from "@/lib/task";
 
 export default function Page() {
+  const { tasks } = useTasks();
+
   return (
     <div className="flex h-[100dvh] flex-col">
       <TopBar>
@@ -10,10 +13,7 @@ export default function Page() {
       </TopBar>
       <main className="flex flex-grow flex-col overflow-y-auto">
         <div className="flex flex-col items-center justify-center gap-4 p-4">
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
-          <TaskCard />
+          {tasks?.map((task) => <TaskCard key={task.id} taskId={task.id} />)}
         </div>
       </main>
       <BottomNavBar selected="tasks" />

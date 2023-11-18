@@ -1,73 +1,81 @@
+import { TaskButton } from "@/components/TaskButton";
+import { statusToText, useTask } from "@/lib/task";
+import { format, parseISO } from "date-fns";
+import { ru } from "date-fns/locale";
 import Link from "next/link";
 
-export default function TaskCard() {
-  const taskId = 1;
+export default function TaskCard({ taskId }: { taskId?: number }) {
+  const { task } = useTask(taskId);
+
+  if (task === undefined || task.status == "draft") return null;
+
   return (
-    <div className="flex w-full flex-col justify-between rounded-lg border-2 border-solid border-green-600">
-      <Link href={`/moperator/tasks/${taskId}`}>
+    <div className="flex w-full flex-col rounded-lg border-2 border-green-600">
+      <Link href={`/moperator/tasks/one?id=${task.id}`}>
         <div className="flex h-fit w-full flex-row border-b-2 border-green-600">
-          <div className="h-fit w-full p-2 font-medium">Посев</div>
+          <div className="h-fit w-full p-2 font-medium">{task.title}</div>
           <div className="flex w-fit items-center p-2 text-sm text-gray-600">
-            #{taskId}
+            #{task.id}
           </div>
         </div>
         <div className="flex flex-col justify-center gap-2 p-2">
           <div className="flex flex-row gap-1">
             <span className="icon-[material-symbols--crop-square-outline] w-6 text-2xl" />
             <div className="flex max-w-full flex-col justify-center overflow-auto break-words">
-              <div className="text-base">Открытая</div>
+              <div className="text-base">
+                {task.status ? statusToText[task.status] : null}
+              </div>
             </div>
           </div>
-          <div className="flex flex-row gap-1">
-            <span className="icon-[material-symbols--event-outline-rounded] w-6 text-2xl" />
-            <div className="flex max-w-full flex-col justify-center overflow-auto break-words">
-              <div className="text-base">18 ноября - 19 ноября</div>
+          {task.starting && (
+            <div className="flex flex-row gap-1">
+              <span className="icon-[material-symbols--event-outline-rounded] w-6 text-2xl" />
+              <div className="flex max-w-full flex-col justify-center overflow-auto break-words">
+                <div className="text-base">
+                  {task.starting
+                    ? format(parseISO(task.starting), "d MMMM", {
+                        locale: ru,
+                      })
+                    : null}
+                  {task.deadline && task.deadline !== task.starting
+                    ? " - " +
+                      format(parseISO(task.deadline), "d MMMM", {
+                        locale: ru,
+                      })
+                    : null}
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-row gap-1">
-            <span className="icon-[material-symbols--pin-drop-outline-rounded] w-6 text-2xl" />
-            <div className="flex max-w-full flex-col justify-center overflow-auto break-words">
-              <div className="text-base">А-121-АБ</div>
+          )}
+          {task.location && (
+            <div className="flex flex-row gap-1">
+              <span className="icon-[material-symbols--pin-drop-outline-rounded] w-6 text-2xl" />
+              <div className="flex max-w-full flex-col justify-center overflow-auto break-words">
+                <div className="text-base">{task.location}</div>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-row gap-1">
-            <span className="icon-[material-symbols--agriculture-outline-rounded] w-6 text-2xl" />
-            <div className="flex max-w-full flex-col justify-center overflow-auto break-words">
-              <div className="text-base">RSM 3535 #7089</div>
+          )}
+          {task.current_machine && (
+            <div className="flex flex-row gap-1">
+              <span className="icon-[material-symbols--agriculture-outline-rounded] w-6 text-2xl" />
+              <div className="flex max-w-full flex-col justify-center overflow-auto break-words">
+                <div className="text-base">{task.current_machine.name}</div>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-row gap-1">
-            <span className="icon-[material-symbols--precision-manufacturing-outline-rounded] w-6 text-2xl" />
-            <div className="flex max-w-full flex-col justify-center overflow-auto break-words">
-              <div className="text-base">Horsh Pronto NT12 #1</div>
+          )}
+          {task.current_agregate && (
+            <div className="flex flex-row gap-1">
+              <span className="icon-[material-symbols--precision-manufacturing-outline-rounded] w-6 text-2xl" />
+              <div className="flex max-w-full flex-col justify-center overflow-auto break-words">
+                <div className="text-base">{task.current_agregate.name}</div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </Link>
-      <button className="flex h-fit w-full flex-row items-center justify-center gap-1 border-t-2 border-green-600 p-2 text-sm font-bold text-green-900">
-        <span className="icon-[material-symbols--play-circle-outline] text-2xl" />
-        ПРИНЯТЬ
-      </button>
-      {/*<div className="flex flex-row border-t-2 border-green-600">*/}
-      {/*  <button className="flex h-fit w-full flex-row items-center justify-center gap-1 border-r-2 border-green-600 p-2 text-sm font-bold text-yellow-600">*/}
-      {/*    <span className="icon-[material-symbols--stop-circle-outline] text-2xl" />*/}
-      {/*    ПАУЗА*/}
-      {/*  </button>*/}
-      {/*  <button className="flex h-fit w-full flex-row items-center justify-center gap-1 p-2 text-sm font-bold text-red-600">*/}
-      {/*    <span className="icon-[material-symbols--cancel-outline] text-2xl" />*/}
-      {/*    ОТМЕНА*/}
-      {/*  </button>*/}
-      {/*</div>*/}
-      {/*<div className="flex flex-row border-t-2 border-green-600">*/}
-      {/*  <button className="flex h-fit w-full flex-row items-center justify-center gap-1 border-r-2 border-green-600 p-2 text-sm font-bold text-green-900">*/}
-      {/*    <span className="icon-[material-symbols--play-circle-outline] text-2xl" />*/}
-      {/*    ПРОДОЛЖИТЬ*/}
-      {/*  </button>*/}
-      {/*  <button className="flex h-fit w-full flex-row items-center justify-center gap-1 p-2 text-sm font-bold text-red-600">*/}
-      {/*    <span className="icon-[material-symbols--cancel-outline] text-2xl" />*/}
-      {/*    ОТМЕНА*/}
-      {/*  </button>*/}
-      {/*</div>*/}
+      <div className="-m-[0.125rem]">
+        <TaskButton taskId={task.id} />
+      </div>
     </div>
   );
 }

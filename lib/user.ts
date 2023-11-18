@@ -1,4 +1,4 @@
-import { API_URL, fetcher } from "@/lib/api";
+import { fetcher } from "@/lib/api";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR from "swr";
@@ -25,9 +25,9 @@ export function useUser() {
     undefined,
   );
   const isClient = useIsClient();
-  const { data, error, mutate } = useSWR(
-    () => (token ? [`${API_URL}/users/me`, token] : null),
-    ([url, token]) => fetcher<User>(url, token),
+  const { data, error, mutate } = useSWR<User>(
+    () => (token ? `/users/me` : null),
+    fetcher,
   );
   const router = useRouter();
 

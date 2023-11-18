@@ -2,11 +2,13 @@ import BottomNavBar from "@/components/BottomNavBar";
 import TaskCard from "@/components/TaskCard";
 import TopBar from "@/components/TopBar";
 import { useLogout } from "@/lib/auth";
+import { useTasks } from "@/lib/task";
 import { useUser } from "@/lib/user";
 
 export default function Page() {
-  const { user } = useUser();
   const logout = useLogout();
+  const { user } = useUser();
+  const { tasks } = useTasks();
 
   return (
     <div className="flex h-[100dvh] flex-col">
@@ -59,8 +61,13 @@ export default function Page() {
           </div>
           <div className="flex flex-col gap-2">
             <h2 className="text-center text-xl font-medium">Текущие задачи</h2>
-            <div>
-              <TaskCard />
+            <div className="flex flex-col items-center justify-center gap-4">
+              {tasks
+                ?.filter(
+                  (task) =>
+                    task.status === "in_progress" || task.status === "paused",
+                )
+                .map((task) => <TaskCard key={task.id} taskId={task.id} />)}
             </div>
           </div>
         </div>
