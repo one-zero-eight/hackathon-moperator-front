@@ -4,7 +4,7 @@ import { useEffect } from "react";
 export default function Page() {
   const router = useRouter();
   useEffect(() => {
-    router.push("/moperator/tasks");
+    router.push("/auth/hello");
   }, [router]);
   return (
     <main className="flex flex-col">

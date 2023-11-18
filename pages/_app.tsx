@@ -1,6 +1,8 @@
 import { defaultAndroid } from "@/lib/androidInterface";
 import { useLoginUsingTag } from "@/lib/auth";
+import { useMachines } from "@/lib/machine";
 import { PWALifeCycle } from "@/lib/PWALifecycle";
+import { useTasks } from "@/lib/task";
 import { useUser } from "@/lib/user";
 import { Web } from "@/lib/webInterface";
 import "@/styles/globals.css";
@@ -17,6 +19,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const { mutate: globalMutate } = useSWRConfig();
   const router = useRouter();
   const { isLoggedIn } = useUser();
+  const preloadTasks = useTasks();
+  const preloadMachines = useMachines();
   const token = useReadLocalStorage<string>("token");
   const loginUsingTag = useLoginUsingTag();
 

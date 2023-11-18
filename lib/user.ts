@@ -46,7 +46,11 @@ export function useUser() {
           prevData.id !== data.id ||
           router.asPath === "/auth/sign-in"
         ) {
-          router.replace("/moperator/tasks");
+          if (data.role === "agronomist" || data.role === "admin") {
+            router.replace("/auth/hello");
+          } else {
+            router.replace("/moperator/tasks");
+          }
         }
         return data;
       });
