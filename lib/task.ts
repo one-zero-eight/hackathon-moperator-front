@@ -52,6 +52,7 @@ export type Task = {
     status: string;
     current_location: string;
   };
+  attachments?: string;
 };
 
 export const statusToText: { [key in TaskStatus]: string } = {

@@ -13,6 +13,7 @@ export type User = {
   last_name: string;
   middle_name: string;
   role: string;
+  photo?: string;
 };
 
 export function useUser() {

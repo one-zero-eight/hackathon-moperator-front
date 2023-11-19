@@ -1,4 +1,5 @@
 import { TaskButton } from "@/components/TaskButton";
+import { API_URL } from "@/lib/api";
 import { statusToText, useTask } from "@/lib/task";
 import { format, parseISO } from "date-fns";
 import { ru } from "date-fns/locale";
@@ -11,7 +12,7 @@ export default function TaskCard({ taskId }: { taskId?: number }) {
 
   return (
     <div className="flex w-full flex-col rounded-lg border-2 border-green-600">
-      <Link href={`/moperator/tasks/one?id=${task.id}`}>
+      <Link href={`/moperator/tasks/one?id=${taskId}`}>
         <div className="flex h-fit w-full flex-row border-b-2 border-green-600">
           <div className="h-fit w-full p-2 font-medium">{task.title}</div>
           <div className="flex w-fit items-center p-2 text-sm text-gray-600">
@@ -73,6 +74,19 @@ export default function TaskCard({ taskId }: { taskId?: number }) {
           )}
         </div>
       </Link>
+      {task.attachments && (
+        <div className="-m-[0.125rem] flex flex-row rounded-lg border-2 border-green-600 text-sm font-bold">
+          <a
+            className="flex h-fit w-full flex-row items-center justify-center gap-1 p-2 text-green-900"
+            href={API_URL + "/" + task.attachments.replace("\\", "/")}
+            download={true}
+            target="_blank"
+          >
+            <span className="icon-[material-symbols--file-save-outline-rounded] text-2xl" />
+            СКАЧАТЬ ФАЙЛ
+          </a>
+        </div>
+      )}
       <div className="-m-[0.125rem]">
         <TaskButton taskId={task.id} />
       </div>

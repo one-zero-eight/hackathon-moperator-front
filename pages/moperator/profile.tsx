@@ -1,6 +1,7 @@
 import BottomNavBar from "@/components/BottomNavBar";
 import TaskCard from "@/components/TaskCard";
 import TopBar from "@/components/TopBar";
+import { API_URL } from "@/lib/api";
 import { useLogout } from "@/lib/auth";
 import { useTasks } from "@/lib/task";
 import { useUser } from "@/lib/user";
@@ -30,7 +31,18 @@ export default function Page() {
           <div className="p-4 text-right text-2xl font-medium">
             {user?.last_name} {user?.first_name} {user?.middle_name}
           </div>
-          <div className="-mr-16 -mt-16 h-60 w-60 min-w-[15rem] rounded-full border-2 border-green-600 bg-green-400" />
+          <div
+            className="-mr-16 -mt-16 h-60 w-60 min-w-[15rem] rounded-full border-2 border-green-600 bg-green-400 bg-cover bg-center bg-no-repeat"
+            style={
+              user?.photo
+                ? {
+                    backgroundImage: `url(${
+                      API_URL + "/" + user.photo.replace("\\", "/")
+                    })`,
+                  }
+                : {}
+            }
+          />
         </div>
         <div className="flex flex-col justify-center gap-4 p-4">
           <div className="flex flex-col gap-2">

@@ -1,85 +1,4 @@
-//  {
 import { fetcher } from "@/lib/api";
-//     "id": 0,
-//     "name": "string",
-//     "type": "string",
-//     "description": "string",
-//     "status": "free",
-//     "current_location": "string",
-//     "suitable_tasks": [
-//       {
-//         "id": 0,
-//         "type": {
-//           "id": 0,
-//           "title": "string",
-//           "description": "string"
-//         },
-//         "title": "string",
-//         "description": "string",
-//         "status": "draft",
-//         "priority": "string",
-//         "location": "string",
-//         "starting": "2023-11-18T20:36:13.108Z",
-//         "deadline": "2023-11-18T20:36:13.108Z",
-//         "created_at": "2023-11-18T20:36:13.108Z",
-//         "updated_at": "2023-11-18T20:36:13.108Z",
-//         "current_machine": {
-//           "id": 0,
-//           "name": "string",
-//           "type": "string",
-//           "status": "free",
-//           "current_location": "string"
-//         },
-//         "current_agregate": {
-//           "id": 0,
-//           "name": "string",
-//           "type": "string",
-//           "status": "string",
-//           "current_location": "string"
-//         }
-//       }
-//     ],
-//     "current_task": {
-//       "id": 0,
-//       "type": {
-//         "id": 0,
-//         "title": "string",
-//         "description": "string"
-//       },
-//       "title": "string",
-//       "description": "string",
-//       "status": "draft",
-//       "priority": "string",
-//       "location": "string",
-//       "starting": "2023-11-18T20:36:13.108Z",
-//       "deadline": "2023-11-18T20:36:13.108Z",
-//       "created_at": "2023-11-18T20:36:13.108Z",
-//       "updated_at": "2023-11-18T20:36:13.108Z",
-//       "current_machine": {
-//         "id": 0,
-//         "name": "string",
-//         "type": "string",
-//         "status": "free",
-//         "current_location": "string"
-//       },
-//       "current_agregate": {
-//         "id": 0,
-//         "name": "string",
-//         "type": "string",
-//         "status": "string",
-//         "current_location": "string"
-//       }
-//     },
-//     "suitable_agregates": [
-//       {
-//         "id": 0,
-//         "name": "string",
-//         "type": "string",
-//         "status": "string",
-//         "current_location": "string"
-//       }
-//     ]
-//   }
 import { Task } from "@/lib/task";
 import useSWR from "swr";
 
@@ -93,6 +12,7 @@ export type Machine = {
   suitable_tasks: Task[];
   current_task: Task;
   suitable_agregates: Agregate[];
+  attachments?: string;
 };
 
 export type MachineStatus = "free" | "busy" | "broken";
