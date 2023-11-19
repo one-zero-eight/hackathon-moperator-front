@@ -11,7 +11,7 @@ export default function TaskCard({ taskId }: { taskId?: number }) {
   if (task === undefined || task.status == "draft") return null;
 
   return (
-    <div className="flex w-full flex-col rounded-lg border-2 border-green-600">
+    <div className="flex w-full flex-col gap-2 rounded-lg border-2 border-green-600">
       <Link href={`/moperator/tasks/one?id=${taskId}`}>
         <div className="flex h-fit w-full flex-row border-b-2 border-green-600">
           <div className="h-fit w-full p-2 font-medium">{task.title}</div>
