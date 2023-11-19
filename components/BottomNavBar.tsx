@@ -35,20 +35,20 @@ export default function BottomNavBar({
           />
         </Link>
       </div>
-      <div className="flex items-center justify-center overflow-clip rounded-full">
-        <Link
-          href="/moperator/notifications"
-          className="flex items-center justify-center p-2"
-        >
-          <span
-            className={`${
-              selected === "notifications"
-                ? "icon-[material-symbols--notifications-rounded] text-3xl text-white"
-                : "icon-[material-symbols--notifications-outline-rounded] text-3xl text-gray-200"
-            }`}
-          />
-        </Link>
-      </div>
+      {/*<div className="flex items-center justify-center overflow-clip rounded-full">*/}
+      {/*  <Link*/}
+      {/*    href="/moperator/notifications"*/}
+      {/*    className="flex items-center justify-center p-2"*/}
+      {/*  >*/}
+      {/*    <span*/}
+      {/*      className={`${*/}
+      {/*        selected === "notifications"*/}
+      {/*          ? "icon-[material-symbols--notifications-rounded] text-3xl text-white"*/}
+      {/*          : "icon-[material-symbols--notifications-outline-rounded] text-3xl text-gray-200"*/}
+      {/*      }`}*/}
+      {/*    />*/}
+      {/*  </Link>*/}
+      {/*</div>*/}
       <div className="flex items-center justify-center overflow-clip rounded-full">
         <Link
           href="/moperator/profile"
